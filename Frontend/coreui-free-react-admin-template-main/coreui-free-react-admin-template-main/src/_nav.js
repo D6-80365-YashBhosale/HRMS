@@ -229,13 +229,13 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Notifications',
+    name: 'Events',
     icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Alerts',
-        to: '/notifications/alerts',
+        name: 'Add Event',
+        to: '/add-event',
       },
       {
         component: CNavItem,

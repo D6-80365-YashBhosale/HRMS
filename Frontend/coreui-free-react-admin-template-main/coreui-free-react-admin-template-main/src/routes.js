@@ -55,6 +55,7 @@ const Register = React.lazy(() => import('./views/Employee/Register'))
 const ViewEmployee = React.lazy(() => import('./views/Employee/viewEmployee.js'))
 const EmployeeList = React.lazy(() => import('./views/Employee/employeeList'))
 const UpdateEmployee = React.lazy(() => import('./views/Employee/updateEmployee1'))
+const AddEvent = React.lazy(() => import('./views/Event/Addevent.js'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -105,6 +106,7 @@ const routes = [
   { path: '/view-employee/:empId', name: 'view-employee', element: ViewEmployee },
   { path: '/employee/list', name: 'employee-list', element: EmployeeList },
   { path: '/update-employee/:empId', name: 'update-employee', element: UpdateEmployee },
+  { path: '/add-event', name: 'add-event', element: AddEvent },
 ]
 
 export default routes
