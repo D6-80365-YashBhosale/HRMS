@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import employeeServiceAPI from 'src/services/employeeServiceAPI'
 import '../../scss/event.css'
+import eventServiceAPI from 'src/services/eventServiceAPI'
 function AddEventForm() {
   const [eventData, setEventData] = useState({
     title: '',
@@ -12,6 +13,7 @@ function AddEventForm() {
     category: '',
   })
   const [bannerFile, setBannerFile] = useState(null)
+  // const [toast, addToast] = useState(0)
 
   function handleChange(e) {
     setEventData({ ...eventData, [e.target.name]: e.target.value })
@@ -45,8 +47,8 @@ function AddEventForm() {
     formData.append('venue', eventData.venue)
     formData.append('category', eventData.category)
     formData.append('bannerFile', bannerFile) // Append banner file
-    employeeServiceAPI
-      .addEmployee(formData)
+    eventServiceAPI
+      .addEvent(formData)
       .then((responseData) => {
         console.log(responseData)
         console.log('event added successfully')
@@ -141,7 +143,22 @@ function AddEventForm() {
             </div>
             <div className="form-group">
               <label htmlFor="bannerFile">Upload Banner:</label>
-              <input type="file" id="bannerFile" name="bannerFile" onChange={handleFileChange} />
+              <input
+                type="file"
+                id="bannerFile"
+                name="bannerFile"
+                onChange={handleFileChange}
+                accept="image/*"
+              />
+              {bannerFile && (
+                <div>
+                  <img
+                    src={URL.createObjectURL(bannerFile)}
+                    alt="selected image"
+                    style={{ maxWidth: '200px', maxHeight: '200px' }}
+                  />
+                </div>
+              )}
             </div>
             <button type="submit">Add Event</button>
           </fieldset>
