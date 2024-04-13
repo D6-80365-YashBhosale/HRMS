@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import java.time.LocalTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,17 @@ public class EventServiceImpl {
 		  event.setBannerData(bannerData);
 		 return mapper.map(eventRepo.save(event), EventDto.class);
 		
+	}
+	
+	public List<EventDto> getAllevents() {
+		List<Event> eventList=eventRepo.findAll();
+		 return eventList.stream()
+		.map(event->mapper.map(event, EventDto.class))
+		.collect(Collectors.toList());
+	}
+	
+	public void deleteEvent( String id) {
+	   eventRepo.deleteById(id);	
 	}
 	
 }
