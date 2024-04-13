@@ -239,13 +239,13 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Badges',
-        to: '/notifications/badges',
+        name: 'View All Events',
+        to: '/view-allEvents',
       },
       {
         component: CNavItem,
-        name: 'Modal',
-        to: '/notifications/modals',
+        name: 'Delete Event',
+        to: '/delete-event',
       },
       {
         component: CNavItem,

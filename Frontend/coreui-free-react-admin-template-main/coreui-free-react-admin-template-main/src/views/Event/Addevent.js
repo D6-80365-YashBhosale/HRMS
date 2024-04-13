@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import employeeServiceAPI from 'src/services/employeeServiceAPI'
 import '../../scss/event.css'
 import eventServiceAPI from 'src/services/eventServiceAPI'
+
 function AddEventForm() {
   const [eventData, setEventData] = useState({
     title: '',
@@ -52,6 +53,17 @@ function AddEventForm() {
       .then((responseData) => {
         console.log(responseData)
         console.log('event added successfully')
+        window.alert('event added succesfully')
+        setEventData({
+          title: '',
+          description: '',
+          startDate: '',
+          endDate: '',
+          time: '',
+          venue: '',
+          category: '',
+        })
+        setBannerFile(null)
       })
       .catch((error) => {
         console.log(error)
@@ -149,8 +161,9 @@ function AddEventForm() {
                 name="bannerFile"
                 onChange={handleFileChange}
                 accept="image/*"
+                required
               />
-              {bannerFile && (
+              {bannerFile && bannerFile.type.includes('image') && (
                 <div>
                   <img
                     src={URL.createObjectURL(bannerFile)}
