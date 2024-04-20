@@ -14,7 +14,7 @@ function AddLeaveTypeForm() {
     }
     try {
       const allLeaveTypes = await leaveServiceAPI.fetchLeaveTypes()
-      console.log(allLeaveTypes)
+      console.log(allLeaveTypes.data)
       const existingLeaveType = allLeaveTypes.find((leave) => leave.leaveType === leaveType)
       if (existingLeaveType) {
         setError('Leave type with this name already exists.')
