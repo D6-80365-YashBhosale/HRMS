@@ -1,0 +1,15 @@
+package com.example.demo.model;
+
+import java.time.LocalDate;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
+
+import lombok.Data;
+
+@Data
+@Document(collection = "leaves") // Collection name in MongoDB
+public class Leave {
+
+}

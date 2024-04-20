@@ -1,0 +1,15 @@
+package com.example.demo.response;
+
+import com.hrms.app.response.LeaveTypeDto;
+
+import lombok.Data;
+
+@Data
+public class LeaveTypeDto {
+
+	
+	 private String leavetypeId;
+	    private String leaveType;
+	    private int maxLeaves;
+
+}

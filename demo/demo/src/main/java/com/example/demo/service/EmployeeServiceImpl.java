@@ -33,6 +33,7 @@ public class EmployeeServiceImpl {
     	 emp.setContactNo(empReq.getContactNo());
     	 emp.setDesig(empReq.getDesig());
     	 emp.setCreatedOn(LocalDateTime.now());
+    	 emp.setUserName(empReq.getEmail());
     	 emp.setLeaveBalance(25);
     	 empRepo.save(emp);
     	 return mapper.map(emp, EmployeeDto.class);
