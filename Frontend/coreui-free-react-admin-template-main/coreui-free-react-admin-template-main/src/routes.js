@@ -58,6 +58,8 @@ const UpdateEmployee = React.lazy(() => import('./views/Employee/updateEmployee1
 const AddEvent = React.lazy(() => import('./views/Event/Addevent.js'))
 const EventListPage = React.lazy(() => import('./views/Event/EventListPage'))
 const AllEvents = React.lazy(() => import('./views/Event/allEvent'))
+const LeaveForm = React.lazy(() => import('./views/leaveform/leave-form'))
+const AddLeaveTypeForm = React.lazy(() => import('./views/leaveform/leaveTypeForm'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -111,6 +113,8 @@ const routes = [
   { path: '/add-event', name: 'add-event', element: AddEvent },
   { path: '/view-allEvents', name: 'view-allEvents', element: EventListPage },
   { path: '/delete-event', name: 'delete event', element: AllEvents },
+  { path: '/leaveform', name: 'leave-form', element: LeaveForm },
+  { path: '/addLeaveType', name: 'leaveType-form', element: AddLeaveTypeForm },
 ]
 
 export default routes

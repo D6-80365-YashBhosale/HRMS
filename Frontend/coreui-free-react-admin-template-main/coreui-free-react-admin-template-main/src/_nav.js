@@ -127,19 +127,19 @@ const _nav = [
 
   {
     component: CNavGroup,
-    name: 'Buttons',
+    name: 'Leaves',
     to: '/buttons',
     icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Buttons',
-        to: '/buttons/buttons',
+        name: 'Apply Leaves',
+        to: '/leaveform',
       },
       {
         component: CNavItem,
-        name: 'Buttons groups',
-        to: '/buttons/button-groups',
+        name: ' Add Leave Type',
+        to: '/addLeaveType',
       },
       {
         component: CNavItem,
