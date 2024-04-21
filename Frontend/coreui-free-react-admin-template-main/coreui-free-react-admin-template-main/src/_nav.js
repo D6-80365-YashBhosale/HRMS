@@ -150,18 +150,18 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Forms',
+    name: 'Holiday',
     icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Form Control',
-        to: '/forms/form-control',
+        name: 'Add Holiday',
+        to: 'holidayform',
       },
       {
         component: CNavItem,
-        name: 'Select',
-        to: '/forms/select',
+        name: 'View All Holiday',
+        to: 'holidays',
       },
       {
         component: CNavItem,

@@ -1,0 +1,27 @@
+.calendar-container {
+  height: 500px;
+}
+
+.holiday-event {
+  background-color: red;
+  border-radius: 0px;
+  opacity: 0.8;
+  color: white;
+  border: none;
+  display: block;
+}
+
+.holiday-details {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.holiday-details h2 {
+  color: #333;
+}
+
+.holiday-details p {
+  color: #666;
+}

@@ -60,6 +60,8 @@ const EventListPage = React.lazy(() => import('./views/Event/EventListPage'))
 const AllEvents = React.lazy(() => import('./views/Event/allEvent'))
 const LeaveForm = React.lazy(() => import('./views/leaveform/leave-form'))
 const AddLeaveTypeForm = React.lazy(() => import('./views/leaveform/leaveTypeForm'))
+const HolidayForm = React.lazy(() => import('./views/Holiday/addHolidayForm'))
+const HolidayCalendar = React.lazy(() => import('./views/Holiday/HolidayCalender'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -115,6 +117,8 @@ const routes = [
   { path: '/delete-event', name: 'delete event', element: AllEvents },
   { path: '/leaveform', name: 'leave-form', element: LeaveForm },
   { path: '/addLeaveType', name: 'leaveType-form', element: AddLeaveTypeForm },
+  { path: '/holidayform', name: 'holidayform', element: HolidayForm },
+  { path: '/holidays', name: 'holidays', element: HolidayCalendar },
 ]
 
 export default routes
