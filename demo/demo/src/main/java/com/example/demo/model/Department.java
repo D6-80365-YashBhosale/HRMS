@@ -25,9 +25,9 @@ public class Department {
 	private String deptId;
     private String deptName;
     
-//    @DBRef
-//    @Field
-//    private Company company;
+    @DBRef
+    @Field
+    private Company company;
     private String recordStatus;
     private boolean isActive;
     private LocalDateTime createdOn;
