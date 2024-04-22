@@ -203,13 +203,13 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Icons',
+    name: 'Department',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'CoreUI Free',
-        to: '/icons/coreui-icons',
+        name: 'Add Department',
+        to: '/RegisterDepartment',
         badge: {
           color: 'success',
           text: 'NEW',

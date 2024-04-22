@@ -62,6 +62,7 @@ const LeaveForm = React.lazy(() => import('./views/leaveform/leave-form'))
 const AddLeaveTypeForm = React.lazy(() => import('./views/leaveform/leaveTypeForm'))
 const HolidayForm = React.lazy(() => import('./views/Holiday/addHolidayForm'))
 const HolidayCalendar = React.lazy(() => import('./views/Holiday/HolidayCalender'))
+const RegisterDepartment = React.lazy(() => import('./views/Department/RegisterDepartment'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -119,6 +120,7 @@ const routes = [
   { path: '/addLeaveType', name: 'leaveType-form', element: AddLeaveTypeForm },
   { path: '/holidayform', name: 'holidayform', element: HolidayForm },
   { path: '/holidays', name: 'holidays', element: HolidayCalendar },
+  { path: '/RegisterDepartment', name: 'department-form', element: RegisterDepartment },
 ]
 
 export default routes
