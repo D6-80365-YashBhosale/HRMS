@@ -43,6 +43,7 @@ public class LeaveController {
 	}
 	
 	// get all leave types from LeaveType Repo
+	
 		@GetMapping("/leave-types")
 		public ResponseEntity<List<LeaveTypeDto>> getAllLeaveTypes() {
 			List<LeaveTypeDto> leaveTypes = leaveService.getLeaveType();

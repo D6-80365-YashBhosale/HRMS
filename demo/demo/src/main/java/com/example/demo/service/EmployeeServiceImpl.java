@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Department;
@@ -22,6 +23,8 @@ public class EmployeeServiceImpl {
      @Autowired IEmployeeRespository empRepo;
      @Autowired IDepartmentRepository deptRepo;
      @Autowired ModelMapper mapper;
+     @Autowired
+ 	private PasswordEncoder passwordEncoder; 
      
      public EmployeeDto addEmployee( EmployeeRequest empReq) { 
     	 Optional<Employee>e=empRepo.findByUserName(empReq.getEmail());
@@ -29,6 +32,8 @@ public class EmployeeServiceImpl {
     		 throw new RuntimeException();
     	 }
     	 Employee emp = mapper.map(empReq, Employee.class);
+    	 String password = emp.getPassword();
+		 emp.setPassword(passwordEncoder.encode(emp.getPassword()));
     	 emp.setEmail(empReq.getEmail());
     	 emp.setContactNo(empReq.getContactNo());
     	 emp.setDesig(empReq.getDesig());

@@ -25,6 +25,7 @@ public class CompanyServiceImpl{
      
      public List<CompanyDto> getAllCompanies(){ 
     	 List<Company> companyList=icompanyRepository.findAll();
+    	 System.out.println("in companies service getAllCompanies method");
     	 return companyList.stream().map(comp -> mapper.map(comp, CompanyDto.class)).collect(Collectors.toList());
      }
      
