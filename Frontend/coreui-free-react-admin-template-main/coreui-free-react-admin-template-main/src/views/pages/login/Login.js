@@ -1,4 +1,5 @@
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import React, { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import {
   CButton,
@@ -15,8 +16,34 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
-
+import AuthserviceAPI from '../../../services/authenticateAPI'
+import { StorageService } from '../../../services/storage.service'
 const Login = () => {
+  const [userName, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+
+  const navigateToDashboard = () => {
+    navigate('/dashboard')
+  }
+  function handleloginClick(e) {
+    e.preventDefault()
+    const formdata = {
+      userName: userName,
+      password: password,
+    }
+    console.log('after onclick login button')
+    AuthserviceAPI.addloginCredentials(formdata)
+      .then((data) => {
+        const token = data.jwt
+        console.log(token)
+        StorageService.set('token', token)
+        navigateToDashboard()
+      })
+      .catch((error) => {
+        console.error('Error while logging:', error)
+      })
+  }
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -25,14 +52,20 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm onSubmit={handleloginClick}>
                     <h1>Login</h1>
                     <p className="text-medium-emphasis">Sign In to your account</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
+                      <CFormInput
+                        placeholder="Username"
+                        autoComplete="username"
+                        required
+                        value={userName}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
@@ -42,11 +75,14 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
+                        <CButton color="primary" className="px-4" type="submit">
                           Login
                         </CButton>
                       </CCol>

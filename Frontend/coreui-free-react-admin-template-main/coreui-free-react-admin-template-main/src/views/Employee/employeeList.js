@@ -98,48 +98,49 @@ function EmployeeList(props) {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {employees.map((employee, index) => (
-            <CTableRow v-for="item in tableItems" key={index}>
-              <CTableDataCell className="text-center">
-                {/* <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} /> */}
-              </CTableDataCell>
-              <CTableDataCell>
-                <div>{employee.firstName}</div>
-              </CTableDataCell>
-              <CTableDataCell className="text-center">
-                {/* <CIcon size="xl" title={item.country.name} /> */}
-                {employee.desig}
-              </CTableDataCell>
-              <CTableDataCell>{employee.email}</CTableDataCell>
-              <CTableDataCell className="text-center">{employee.leaveBalance}</CTableDataCell>
-              <CTableDataCell>
-                {props.flag ? (
-                  <button
-                    onClick={() => {
-                      viewEmployee(employee.empId)
-                    }}
-                  >
-                    View
-                  </button>
-                ) : (
-                  <span>
-                    <CButton
-                      type="button"
-                      color="success"
+          {employees &&
+            employees.map((employee, index) => (
+              <CTableRow v-for="item in tableItems" key={index}>
+                <CTableDataCell className="text-center">
+                  {/* <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} /> */}
+                </CTableDataCell>
+                <CTableDataCell>
+                  <div>{employee.firstName}</div>
+                </CTableDataCell>
+                <CTableDataCell className="text-center">
+                  {/* <CIcon size="xl" title={item.country.name} /> */}
+                  {employee.desig}
+                </CTableDataCell>
+                <CTableDataCell>{employee.email}</CTableDataCell>
+                <CTableDataCell className="text-center">{employee.leaveBalance}</CTableDataCell>
+                <CTableDataCell>
+                  {props.flag ? (
+                    <button
                       onClick={() => {
-                        updateEmployee(employee.empId)
+                        viewEmployee(employee.empId)
                       }}
                     >
-                      Update
-                    </CButton>
-                    <CButton type="button" color="danger">
-                      Delete
-                    </CButton>
-                  </span>
-                )}
-              </CTableDataCell>
-            </CTableRow>
-          ))}
+                      View
+                    </button>
+                  ) : (
+                    <span>
+                      <CButton
+                        type="button"
+                        color="success"
+                        onClick={() => {
+                          updateEmployee(employee.empId)
+                        }}
+                      >
+                        Update
+                      </CButton>
+                      <CButton type="button" color="danger">
+                        Delete
+                      </CButton>
+                    </span>
+                  )}
+                </CTableDataCell>
+              </CTableRow>
+            ))}
 
           <br></br>
         </CTableBody>

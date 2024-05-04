@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+const HrDashboard = React.lazy(() => import('./views/dashboard/Dashboard.hr'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
@@ -63,8 +64,11 @@ const AddLeaveTypeForm = React.lazy(() => import('./views/leaveform/leaveTypeFor
 const HolidayForm = React.lazy(() => import('./views/Holiday/addHolidayForm'))
 const HolidayCalendar = React.lazy(() => import('./views/Holiday/HolidayCalender'))
 const RegisterDepartment = React.lazy(() => import('./views/Department/RegisterDepartment'))
+const AddCompanyForm = React.lazy(() => import('./views/Company/addComanyForm'))
+const ViewCompaniesPage = React.lazy(() => import('./views/Company/viewAllCompnaies'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
+  { path: '/hrdashboard', name: 'HR Dashboard', element: HrDashboard, allowedRoles: ['hr'] },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
@@ -111,16 +115,45 @@ const routes = [
   //
   { path: '/register', name: 'register', element: Register },
   { path: '/view-employee/:empId', name: 'view-employee', element: ViewEmployee },
-  { path: '/employee/list', name: 'employee-list', element: EmployeeList },
+  {
+    path: '/employees',
+    name: 'employee-list',
+    element: EmployeeList,
+    allowedRoles: ['manager', 'hr'],
+  },
   { path: '/update-employee/:empId', name: 'update-employee', element: UpdateEmployee },
   { path: '/add-event', name: 'add-event', element: AddEvent },
-  { path: '/view-allEvents', name: 'view-allEvents', element: EventListPage },
+  { path: '/All-event', name: 'view-allEvents', element: EventListPage },
   { path: '/delete-event', name: 'delete event', element: AllEvents },
-  { path: '/leaveform', name: 'leave-form', element: LeaveForm },
-  { path: '/addLeaveType', name: 'leaveType-form', element: AddLeaveTypeForm },
-  { path: '/holidayform', name: 'holidayform', element: HolidayForm },
-  { path: '/holidays', name: 'holidays', element: HolidayCalendar },
-  { path: '/RegisterDepartment', name: 'department-form', element: RegisterDepartment },
+  {
+    path: '/leave',
+    name: 'leave-form',
+    element: LeaveForm,
+    allowedRoles: ['manager', 'hr', 'admin', 'employee', 'teamlead'],
+  },
+  {
+    path: '/leave/leaveType',
+    name: 'leaveType-form',
+    element: AddLeaveTypeForm,
+    allowedRoles: ['hr'],
+  },
+
+  {
+    path: '/Add-company',
+    name: 'Company-form',
+    element: AddCompanyForm,
+    allowedRoles: ['manager', 'hr', 'admin'],
+  },
+  {
+    path: '/All-companies',
+    name: 'Company-form',
+    element: ViewCompaniesPage,
+    allowedRoles: ['manager', 'hr', 'teamlead', 'admin'],
+  },
+
+  { path: '/addHoliday', name: 'holidayform', element: HolidayForm },
+  { path: '/getHolidays', name: 'holidays', element: HolidayCalendar },
+  { path: '/registerDept', name: 'department-form', element: RegisterDepartment },
 ]
 
 export default routes
