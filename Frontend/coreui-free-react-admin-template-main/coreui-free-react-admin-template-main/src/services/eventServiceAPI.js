@@ -1,8 +1,22 @@
 import axios from 'axios'
+import { StorageService } from './storage.service'
+
 class EventServieAPI {
+  constructor() {
+    this.api = axios.create({
+      baseURL: 'http://localhost:8080/events', // Set the base URL for all event-related requests
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  }
   async deleteEvent(eventId) {
     try {
-      const response = await axios.delete(`http://localhost:8080/events/${eventId}`)
+      const token = StorageService.get('token')
+
+      const response = await this.api.delete(`/${eventId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       console.log(response)
       console.log('got reponse event deleted ')
       return response.data
@@ -16,7 +30,16 @@ class EventServieAPI {
 
   async addEvent(formData) {
     try {
-      const response = await axios.post(`http://localhost:8080/events/add`, formData)
+      const token = StorageService.get('token')
+
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set content type to multipart/form-data
+          Authorization: `Bearer ${token}`,
+        },
+      }
+
+      const response = await axios.post('http://localhost:8080/events/add', formData, config)
       console.log(response)
       console.log('got reponse')
     } catch (error) {
@@ -29,7 +52,11 @@ class EventServieAPI {
 
   async getAllEvents() {
     try {
-      const response = await axios.get(`http://localhost:8080/events/all`)
+      const token = StorageService.get('token')
+
+      const response = await this.api.get('/all', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       console.log(response)
       console.log('got reponse in fetching ')
       return response

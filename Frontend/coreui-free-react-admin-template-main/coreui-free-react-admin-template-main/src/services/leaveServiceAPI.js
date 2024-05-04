@@ -1,8 +1,23 @@
 import axios from 'axios'
+import { StorageService } from './storage.service'
 class LeaveServiceAPI {
+  constructor() {
+    this.api = axios.create({
+      baseURL: 'http://localhost:8080', // Base URL for API requests
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  }
+
   async insertLeave(leave) {
     try {
-      const response = await axios.post(`http://localhost:8080/leave`, leave)
+      const token = StorageService.get('token')
+      const response = await this.api.post('/leave', leave, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+        },
+      })
       console.log(response)
       console.log('got reponse in fetching ')
       return response.data
@@ -16,7 +31,12 @@ class LeaveServiceAPI {
 
   async fetchLeaveTypes() {
     try {
-      const allLeaveTypes = await axios.get(`http://localhost:8080/leave/leave-types`)
+      const token = StorageService.get('token')
+      const allLeaveTypes = await this.api.get('/leave/leave-types', {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+        },
+      })
       console.log(allLeaveTypes)
       console.log('got reponse in fetching ')
       return allLeaveTypes.data
@@ -30,7 +50,13 @@ class LeaveServiceAPI {
 
   async addLeaveType(leaveTypeData) {
     try {
-      const response = await axios.post(`http://localhost:8080/api/leavetypes/add`, leaveTypeData)
+      const token = StorageService.get('token')
+
+      const response = await this.api.post('/api/leavetypes/add', leaveTypeData, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+        },
+      })
       console.log(response)
       console.log('got reponse in adding leavetype ')
       return response

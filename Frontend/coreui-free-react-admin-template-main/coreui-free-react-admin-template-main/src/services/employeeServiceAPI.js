@@ -1,11 +1,24 @@
 import axios from 'axios'
-
+import { StorageService } from './storage.service'
 class EmployeeServiceAPI {
+  constructor() {
+    this.api = axios.create({
+      baseURL: 'http://localhost:8080', // Base URL for API requests
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  }
+
   async updateEmployee(employee) {
     try {
-      // Await the async call to axios.get
-      const response = await axios.put(`http://localhost:8080/employee/${employee.id}`, employee)
-      // Return the data property from the response
+      const token = StorageService.get('token')
+
+      const response = await this.api.put(`/employee/${employee.id}`, employee, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+        },
+      })
       console.log(response)
       return response.data
     } catch (error) {
@@ -18,9 +31,13 @@ class EmployeeServiceAPI {
 
   async getSingleEmployee(empId) {
     try {
-      // Await the async call to axios.get
-      const response = await axios.get(`http://localhost:8080/employee/${empId}`)
-      // Return the data property from the response
+      const token = StorageService.get('token')
+
+      const response = await this.api.get(`/employee/${empId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+        },
+      })
       console.log(response)
       return response.data
     } catch (error) {
@@ -33,9 +50,12 @@ class EmployeeServiceAPI {
 
   async getAllEmployeeList() {
     try {
-      // Await the async call to axios.get
-      const response = await axios.get('http://localhost:8080/employee')
-      // Return the data property from the response
+      const token = StorageService.get('token')
+      const response = await this.api.get('/employee', {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+        },
+      })
       console.log(response)
       return response.data
     } catch (error) {
@@ -48,13 +68,17 @@ class EmployeeServiceAPI {
 
   async getManagerList() {
     try {
-      // Await the async call to axios.get
-      const response = await axios.get('http://localhost:8080/employee/managers')
+      const token = StorageService.get('token')
+      const response = await this.api.get('/employee/managers', {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+        },
+      })
       // Return the data property from the response
       return response.data
     } catch (error) {
       // Log the error to the console or handle it as needed
-      console.error('Error fetching department list:', error)
+      console.error('Error fetching manager list:', error)
       // Return null or throw the error, depending on your error handling strategy
       return null
     }
@@ -62,7 +86,12 @@ class EmployeeServiceAPI {
 
   async addEmployee(employeeObj) {
     try {
-      const response = await axios.post('http://localhost:8080/employee', employeeObj)
+      const token = StorageService.get('token')
+      const response = await this.api.post('/employee', employeeObj, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+        },
+      })
       console.log(response)
       console.log('in add employee success')
     } catch (error) {

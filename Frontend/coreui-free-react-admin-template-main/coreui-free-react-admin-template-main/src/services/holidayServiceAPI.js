@@ -1,8 +1,20 @@
 import axios from 'axios'
+import { StorageService } from './storage.service'
 class HolidayServiceAPI {
+  constructor() {
+    this.api = axios.create({
+      baseURL: 'http://localhost:8080/',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  }
   async addHoliday(holidayData) {
     try {
-      const response = await axios.post('http://localhost:8080/holiday', holidayData)
+      const token = StorageService.get('token')
+      const response = await this.api.post('/holiday', holidayData, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       console.log(response)
       console.log(' add holiday success')
       return response.data
@@ -16,7 +28,11 @@ class HolidayServiceAPI {
 
   async fetchAllHolidays() {
     try {
-      const response = await axios.get('http://localhost:8080/holiday/get')
+      const token = StorageService.get('token')
+
+      const response = await this.api.get('/holiday/get', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       console.log(response)
       console.log(' fetch holiday success')
       return response.data
