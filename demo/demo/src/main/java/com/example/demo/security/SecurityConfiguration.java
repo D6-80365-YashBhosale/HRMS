@@ -25,8 +25,12 @@ public class SecurityConfiguration {
 		.disable().
 		authorizeRequests()
 		 .requestMatchers("/department","/login").permitAll()
-         .requestMatchers("/leave/**").hasAnyAuthority("Manager", "Hr")  // Access to /leave for Manager and Hr
+         .requestMatchers("/leave/**").hasAnyAuthority("Manager", "Hr","Employee")  // Access to /leave for Manager and Hr
          .requestMatchers("/employees/**").hasAnyAuthority("Manager", "Hr") // General access to /employees for Manager and Hr
+         .requestMatchers("/events/**").hasAuthority("Hr") 
+         .requestMatchers("/holiday/get").hasAnyAuthority("Manager", "Hr", "Employee") // Access to /get for Manager, Hr, and Employee
+         .requestMatchers("/holiday").hasAuthority("Hr") // Access to /holiday for Hr only
+         .requestMatchers("/api/companies").hasAuthority("Hr")
 		.anyRequest().authenticated()
             .and()
                 .logout()

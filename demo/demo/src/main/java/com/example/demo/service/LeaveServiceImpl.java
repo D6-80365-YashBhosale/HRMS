@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,6 +22,7 @@ import com.example.demo.repo.ILeaveTypeRepository;
 import com.example.demo.request.LeaveRequest;
 import com.example.demo.response.LeaveDto;
 import com.example.demo.response.LeaveTypeDto;
+
 
 
 
@@ -76,5 +79,51 @@ public class LeaveServiceImpl {
 		
 
 	}
+	
+	
+
+	public List<LeaveDto> getLeavesList(String username) {
+		System.out.println(username);
+		Optional<Employee> o = empRepo.findByUserName(username);
+		if (o.isPresent()) {
+			Employee employee = o.get();
+			String desig = employee.getDesig();
+			String managerId = employee.getEmpId();
+			
+			if ("MANAGER".equalsIgnoreCase(desig)) {
+				List<LeaveDto> leaveList = new ArrayList<>();
+				try {
+					System.out.println("inside try");
+					List<Employee> empList = empRepo.findByManager(managerId);
+					System.out.println(empList);
+					for (Employee emp : empList) {
+						String empId = emp.getEmpId();
+						System.out.println(empId);
+						 List<Leave> allLeaves = leaveRepository.findAllByEmpId(empId);
+						System.out.println(allLeaves);
+						allLeaves.forEach(leave -> {
+							LeaveDto leaveDto = mapper.map(leave, LeaveDto.class);
+							leaveDto.setFirstName(emp.getFirstName());
+						    leaveDto.setLastName(emp.getLastName());
+						    if(!leave.isLeaveStatus()) {
+						    	leaveList.add(leaveDto);
+						} 
+						});
+					}
+				} catch (Exception e) {
+					//System.out.println("Exception in fetching leave list !");
+				
+					throw new RuntimeException("Exception in fetching leave list !");
+				}
+				if(!leaveList.isEmpty())
+					return leaveList;
+			} else {
+				// Handle non-manager or if leaves not scheduled here
+				return Collections.emptyList();
+			}
+		}
+		return Collections.emptyList(); // or throw an exception if employee is not found
+	}
+
 
 }

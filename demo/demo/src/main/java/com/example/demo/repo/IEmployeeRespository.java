@@ -12,6 +12,7 @@ import com.example.demo.model.Employee;
 public interface IEmployeeRespository extends MongoRepository<Employee, String> {
        public Optional<Employee> findByUserName(String username);
        
+       public List<Employee> findByManager(String managerId);
        
        public List<Employee>  findByDesig(String designation);
        

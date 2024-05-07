@@ -46,11 +46,11 @@ public class CompanyController {
 			return ResponseEntity.ok(companyService.updateCompany(companyRequest));
 		}
 		
-//		@DeleteMapping("/{companyId}")
-//		public ResponseEntity<?> removeCompany(@PathVariable String companyId){
-//			System.out.println("in delete company method "); 
-//			return ResponseEntity.ok(companyService.deleteCompany(companyId));
-//		} 
+		@DeleteMapping("/{companyId}")
+		public ResponseEntity<?> removeCompany(@PathVariable String companyId){
+			System.out.println("in delete company method "); 
+			return ResponseEntity.ok(companyService.deleteCompany(companyId));
+		} 
 		@GetMapping("/{companyId}")
 		public ResponseEntity<?> getCompany(@PathVariable String companyId){
 			//call service method for fetching an employee info 

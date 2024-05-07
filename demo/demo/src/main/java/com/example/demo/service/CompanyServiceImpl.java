@@ -40,10 +40,10 @@ public class CompanyServiceImpl{
          return mapper.map(savedCompany, CompanyDto.class);
      }
     
-//     public ApiResponse deleteCompany(String companyId) {
-//    	 icompanyRepository.deleteById(companyId);
-//    	 return new ApiResponse("Company Details Deleted");
-//     }
+     public String deleteCompany(String companyId) {
+    	 icompanyRepository.deleteById(companyId);
+    	 return new String("Company Details Deleted");
+     }
 
      public CompanyDto updateCompany(CompanyRequest compReq) {
         Company oldCompany = icompanyRepository.findById(compReq.getCompanyId()).orElseThrow();
