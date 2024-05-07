@@ -67,6 +67,25 @@ class LeaveServiceAPI {
       return null
     }
   }
+
+  async fetchLeave() {
+    try {
+      const token = StorageService.get('token')
+      const response = await this.api.get('/leave', {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
+        },
+      })
+      console.log(response)
+      console.log('got reponse in fetching ')
+      return response.data
+    } catch (error) {
+      // Log the error to the console or handle it as needed
+      console.error(' error fetching leave :', error)
+      // Return null or throw the error, depending on your error handling strategy
+      return null
+    }
+  }
 }
 
 export default new LeaveServiceAPI()

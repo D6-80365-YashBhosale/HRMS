@@ -66,6 +66,8 @@ const HolidayCalendar = React.lazy(() => import('./views/Holiday/HolidayCalender
 const RegisterDepartment = React.lazy(() => import('./views/Department/RegisterDepartment'))
 const AddCompanyForm = React.lazy(() => import('./views/Company/addComanyForm'))
 const ViewCompaniesPage = React.lazy(() => import('./views/Company/viewAllCompnaies'))
+const leaveApproval = React.lazy(() => import('./views/leaveform/leave-approval-form'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/hrdashboard', name: 'HR Dashboard', element: HrDashboard, allowedRoles: ['hr'] },
@@ -154,6 +156,12 @@ const routes = [
   { path: '/addHoliday', name: 'holidayform', element: HolidayForm },
   { path: '/getHolidays', name: 'holidays', element: HolidayCalendar },
   { path: '/registerDept', name: 'department-form', element: RegisterDepartment },
+  {
+    path: '/leave/leave-approval',
+    name: 'Leave Approval',
+    element: leaveApproval,
+    allowedRoles: ['manager', 'hr', 'teamlead'],
+  },
 ]
 
 export default routes
