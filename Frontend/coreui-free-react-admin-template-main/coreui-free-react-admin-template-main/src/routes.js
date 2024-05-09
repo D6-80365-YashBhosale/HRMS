@@ -67,7 +67,7 @@ const RegisterDepartment = React.lazy(() => import('./views/Department/RegisterD
 const AddCompanyForm = React.lazy(() => import('./views/Company/addComanyForm'))
 const ViewCompaniesPage = React.lazy(() => import('./views/Company/viewAllCompnaies'))
 const leaveApproval = React.lazy(() => import('./views/leaveform/leave-approval-form'))
-
+const leavehistory = React.lazy(() => import('./views/leaveform/leavesHistory'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/hrdashboard', name: 'HR Dashboard', element: HrDashboard, allowedRoles: ['hr'] },
@@ -161,6 +161,12 @@ const routes = [
     name: 'Leave Approval',
     element: leaveApproval,
     allowedRoles: ['manager', 'hr', 'teamlead'],
+  },
+  {
+    path: 'leave-history',
+    name: 'leave-history',
+    element: leavehistory,
+    allowedRoles: ['manager', 'hr', 'admin', 'employee'],
   },
 ]
 

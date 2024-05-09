@@ -56,6 +56,11 @@ const employeeNav = [
         name: 'Apply Leave',
         to: '/leave',
       },
+      {
+        component: CNavItem,
+        name: 'Leave History',
+        to: '/leave-history',
+      },
     ],
   },
   {

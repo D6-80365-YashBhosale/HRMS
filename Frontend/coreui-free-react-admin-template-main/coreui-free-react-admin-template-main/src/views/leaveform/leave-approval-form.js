@@ -30,22 +30,23 @@ const LeaveApproval = () => {
       })
   }
 
-  //   const handleApprove = (leaveId) => {
-  //     // Send approval request to the backend for the specified leaveId
-  //     LeaveService.approveLeave(leaveId)
-  //       .then((response) => {
-  //         console.log('Leave approved:', response)
-  //         // If you want to update the UI after approval, you can remove the approved leave from the list
-  //         setLeaveData(leaveData.filter((leave) => leave.leaveId !== leaveId))
-  //         addToast(successToast)
-  //         setError('')
-  //       })
-  //       .catch((error) => {
-  //         addToast(invalidToast)
-  //         setError('Error approving leave')
-  //         console.error('Error approving leave:', error)
-  //       })
-  //   }
+  const handleApprove = (leaveId) => {
+    // Send approval request to the backend for the specified leaveId
+    console.log('in handleapproval method')
+    leaveServiceAPI
+      .approveLeave(leaveId)
+      .then((response) => {
+        console.log('Leave approved:', response)
+        // If you want to update the UI after approval, you can remove the approved leave from the list
+        setLeaveData(leaveData.filter((leave) => leave.leaveId !== leaveId))
+
+        setError('')
+      })
+      .catch((error) => {
+        setError('Error approving leave')
+        console.error('Error approving leave:', error)
+      })
+  }
 
   return (
     <div className="leave-approval-container">
@@ -83,8 +84,7 @@ const LeaveApproval = () => {
                 <td>{leave.leaveStartOn}</td>
                 <td>{leave.leaveEndOn}</td>
                 <td>
-                  {/* <button onClick={() => handleApprove(leave.leaveId)}>Approve</button> */}
-                  <button>Approve</button>
+                  <button onClick={() => handleApprove(leave.leaveId)}>Approve</button>
                 </td>
               </tr>
             ))}
