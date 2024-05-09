@@ -1,9 +1,12 @@
 package com.example.demo.service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.management.RuntimeErrorException;
@@ -11,6 +14,7 @@ import javax.management.RuntimeErrorException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.model.Employee;
 import com.example.demo.model.Leave;
@@ -20,8 +24,10 @@ import com.example.demo.repo.ILeaveRepository;
 import com.example.demo.repo.ILeaveTypeRepository;
 
 import com.example.demo.request.LeaveRequest;
+import com.example.demo.response.ApiResponse;
 import com.example.demo.response.LeaveDto;
 import com.example.demo.response.LeaveTypeDto;
+
 
 
 
@@ -124,6 +130,57 @@ public class LeaveServiceImpl {
 		}
 		return Collections.emptyList(); // or throw an exception if employee is not found
 	}
+	
+	
+	public ApiResponse approveLeave(String leaveId) {
+		try {
+			Optional<Leave> leave = leaveRepository.findById(leaveId);
+			if (leave.isPresent()) {
+				Leave l = leave.get();
+				l.setLeaveStatus(true);
+				leaveRepository.save(l); 
+				Employee emp1=l.getEmpId();   
+				LocalDate date1=l.getLeaveStartOn(); 
+				LocalDate date2=l.getLeaveEndOn();
+				int daysDifference = (int)ChronoUnit.DAYS.between(date1, date2);  
+				System.out.println(daysDifference);
+				int lbalance=emp1.getLeaveBalance()-(daysDifference+1); 
+				System.out.println(lbalance);
+				emp1.setLeaveBalance(lbalance);  
+				System.out.println(emp1);
+				empRepo.save(emp1); 
+				Employee emp2=empRepo.findById(emp1.getEmpId())
+						.orElseThrow(() -> new RuntimeException("invalid employee id")); 
+				System.out.println(emp2);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error occurred while approving leave: " + e.getMessage());
+			throw new RuntimeException("Error occurred while approving leave. Please try again later.");
+		}
+		return new ApiResponse("Leave approved of employeeId : " + leaveId);
+	}
+    
+	 public List<LeaveDto> leavesByEmployeeId(String username) {
+	        try {
+	            Optional<Employee> employeeOpt = empRepo.findByUserName(username);
+	            if (employeeOpt.isPresent()) {
+	                Employee employee = employeeOpt.get();
+	                String empId = employee.getEmpId();
+	                List<Leave> leaves = leaveRepository.findAllByEmpId(empId);
+	                // Map the Leave entities to LeaveDto using the mapper
+	                return leaves.stream()
+	                        .map(leave -> mapper.map(leave, LeaveDto.class))
+	                        .collect(Collectors.toList());
+	            } else {
+	                // Handle case where employee is not found
+	                throw new RuntimeException("Employee with username " + username + " not found");
+	            }
+	        } catch (Exception e) {
+	            // Log the exception or handle it accordingly
+	            throw new RuntimeException("Error retrieving leaves for employee " + username, e);
+	        }
+	    }
 
 
 }

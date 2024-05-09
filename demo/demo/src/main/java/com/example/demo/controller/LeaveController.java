@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,5 +66,24 @@ public class LeaveController {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 			}
 
+		}
+		@PutMapping("/{leaveId}")
+		public ResponseEntity<String> approveLeave(@PathVariable String leaveId) {
+			try {
+				leaveService.approveLeave(leaveId);
+				return ResponseEntity.ok("Leave approved successfully");
+			} catch (Exception e) {
+				// Handle any errors and return an error response
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.body("Error approving leave: " + e.getMessage());
+			}
+		}
+		
+		@GetMapping("/my-leaves")
+		public ResponseEntity<List<LeaveDto>> getLeavesForEmployee(){
+			String username=authUtils.getUsername();
+			return  new ResponseEntity<>(leaveService.leavesByEmployeeId(username),HttpStatus.OK);
+			
+			
 		}
 }
